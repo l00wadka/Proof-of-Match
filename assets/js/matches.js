@@ -212,7 +212,7 @@ function init() {
 
 function shareOnX() {
 	const score = document.getElementById('final').textContent;
-	const text = `I JUST DID ${score} IN GUESS PROOVE GAME, TRY THIS OUT HERE https://proof-of-match.vercel.app/ MADE BY @0xlowadka `;
+	const text = `HEY @SuccinctLabs I JUST DID ${score} IN GUESS PROOVE GAME, TRY THIS OUT HERE https://proof-of-match.vercel.app/ MADE BY @0xlowadka `;
 	const url = `https://x.com/compose/post?text=${encodeURIComponent(text)}`;
 	window.open(url, '_blank');
 }
