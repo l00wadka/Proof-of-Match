@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>FIND THE MATCH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/match.css">
+  <script src="assets/js/lib/chance.js"></script>
+</head>
+
+<body>
+  <div class="modal-overlay"></div>
+  <div>
+    <!-- How to play?  Modal -->
+    <div class="modal" id="howToPlayModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">
+              How to play?
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </h2>
+          </div>
+          <div class="modal-body">
+            <ol class="numbered-list">
+              <li>Click on a tile to reveal its image.</li>
+              <li>Find matching pairs of images.</li>
+              <li class="sublist">Scoring:
+                <ol class="alpha-list">
+                  <li>Matching pair: +25 points (with time bonus)</li>
+                  <li>Wrong pair: -5 points (with time bonus)</li>
+                  <li>Time bonus multiplier: 0.5x to 2.0x</li>
+                </ol>
+              </li>
+              <li>The faster you play, the higher your score multiplier!</li>
+              <li>Complete the game by finding all pairs.</li>
+            </ol>
+            <div class="bonus-info">
+              Time Bonus:
+              • Fast play (under 1 min): up to 2.0x multiplier
+              • Optimal time (1 min): 1.0x multiplier
+              • Slow play (over 1 min): down to 0.5x multiplier
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Congratulations Modal -->
+    <div class="modal" id="congrat" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Congratulations</h2>
+          </div>
+          <div class="modal-body">
+            <div class="congrat-text">
+              You have successfully completed the Game
+              <br>
+              <div class="final-score">Your Score is: <span id="final">234</span></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="modal-button" onclick="init()" data-dismiss="modal">Play Again</button>
+            <button type="button" class="modal-button share-button" onclick="shareOnX()">Share on X</button>
+            <button type="button" class="modal-button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app-container">
+    <div class="game-container">
+      <div class="control-panel">
+        <a href="#" data-toggle="modal" data-target="#howToPlayModal" class="control-button">How to play?</a>
+        <div class="timer-box">
+          <span class="timer-display" id="timer">00:00</span>
+        </div>
+        <div class="score-box">
+          <span class="score-display" id="score">000</span>
+        </div>
+        <button class="control-button" onclick="init()">Reset</button>
+        <button class="control-button" onclick="toggleMusic()" id="musicBtn">
+          <span class="music-icon">🔊</span>
+        </button>
+      </div>
+      <audio id="bgMusic" loop>
+        <source src="backgroundmusic.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="victorySound">
+        <source src="final.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="openCardSound">
+        <source src="openimage.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="matchSound">
+        <source src="match.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="dismatchSound">
+        <source src="dismatch.mp3" type="audio/mpeg">
+      </audio>
+      <div class="game-grid">
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+        <div class="game-tile">
+          <div class="thumbnail"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/lib/jquery-3.3.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src="assets/js/matches.js"></script>
+</body>
+
+</html>
